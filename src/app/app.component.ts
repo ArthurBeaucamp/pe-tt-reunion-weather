@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import MeteoInfo from '../assets/meteo.json';
+import { IWeatherInfoJson } from './interfaces/IMeteoInfo';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'pe-tt-reunion-weather';
+
+  public meteoInfo: IWeatherInfoJson = MeteoInfo;
 }

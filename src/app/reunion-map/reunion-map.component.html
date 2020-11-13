@@ -1,0 +1,24 @@
+<div class="container">
+  <reunion-map-infos [report]="weatherJson.meteo.bulletin"></reunion-map-infos>
+
+  <div class="map-container">
+    <reunion-map-weather-infos [weathers]="weatherJson.meteo.bulletin.ville"></reunion-map-weather-infos>
+
+    <google-map
+      height="600px"
+      width="600px"
+      [zoom]="zoom"
+      [center]="center"
+      [options]="options">
+      <map-marker
+        *ngFor="let marker of markers"
+        [position]="marker.position"
+        [label]="marker.label"
+      >
+      </map-marker>
+    </google-map>
+
+    <reunion-map-temperature [weathers]="weatherJson.meteo.bulletin.ville"></reunion-map-temperature>
+  </div>
+</div>
+
