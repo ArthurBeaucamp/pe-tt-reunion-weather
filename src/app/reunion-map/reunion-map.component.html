@@ -4,7 +4,7 @@
   <div class="map-container">
     <reunion-map-weather-infos [weathers]="weatherJson.meteo.bulletin.ville"></reunion-map-weather-infos>
 
-    <reunion-map-leaflet></reunion-map-leaflet>
+    <reunion-map-leaflet [weathers]="weatherJson.meteo.bulletin.ville"></reunion-map-leaflet>
 
     <reunion-map-temperature [weathers]="weatherJson.meteo.bulletin.ville"></reunion-map-temperature>
   </div>

@@ -9,6 +9,7 @@ import { InfosTitlePipe } from './pipes/infos-title.pipe';
 import { ReunionMapTemperatureComponent } from './reunion-map/components/reunion-map-temperature/reunion-map-temperature.component';
 import { ReunionMapWeatherInfosComponent } from './reunion-map/components/reunion-map-weather-infos/reunion-map-weather-infos.component';
 import { ReunionMapLeafletComponent } from './reunion-map/components/reunion-map-leaflet/reunion-map-leaflet.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { ReunionMapLeafletComponent } from './reunion-map/components/reunion-map
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
