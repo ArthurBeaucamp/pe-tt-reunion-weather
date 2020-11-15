@@ -10,6 +10,8 @@ import { IMinAndMax, NumberAverageService } from 'src/app/services/number-averag
 export class ReunionMapTemperatureComponent implements OnInit {
   @Input()
   public weathers: IWeather[];
+  @Input()
+  public onPopup: boolean = false;
 
   public minAndMaxAverage: IMinAndMax;
 

@@ -1,0 +1,16 @@
+.popup-container {
+  font-family: 'Roboto', sans-serif;
+  color: #E1E1E1;
+  text-align: center;
+
+  .weather-infos-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+}

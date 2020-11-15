@@ -1,0 +1,7 @@
+<div class="popup-container">
+  <h2>{{ weather.id }}</h2>
+  <div class="weather-infos-container">
+    <reunion-map-weather-infos [weathers]="[weather]" [onPopup]="true"></reunion-map-weather-infos>
+    <reunion-map-temperature [weathers]="[weather]" [onPopup]="true"></reunion-map-temperature>
+  </div>
+</div>

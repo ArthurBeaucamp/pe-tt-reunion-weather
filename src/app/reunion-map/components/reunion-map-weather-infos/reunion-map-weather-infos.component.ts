@@ -10,6 +10,8 @@ import { NumberAverageService } from 'src/app/services/number-average.service';
 export class ReunionMapWeatherInfosComponent implements OnInit {
   @Input()
   public weathers: IWeather[];
+  @Input()
+  public onPopup: boolean = false;
 
   public humidity: number;
   public windDirection: string;
@@ -20,7 +22,10 @@ export class ReunionMapWeatherInfosComponent implements OnInit {
 
   ngOnInit(): void {
     this.humidity = this.numberAverageService.numAverageRounded(this.weathers.map((weather: IWeather) => Number(weather.humidite)));
-    this.windDirection = this.weathers[0].vent_direction;
+
+    const windForce: number[] = this.weathers.map((weather: IWeather) => Number(weather.vent_force));
+
+    this.windDirection = `${this.weathers[0].vent_direction} ${this.numberAverageService.numAverageRounded(windForce)}`;
   }
 
 }

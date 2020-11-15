@@ -2,3 +2,9 @@
   width: 600px;
   height: 600px;
 }
+
+#map ::ng-deep {
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: #212127;
+  }
+}

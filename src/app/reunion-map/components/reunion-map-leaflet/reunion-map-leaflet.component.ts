@@ -1,10 +1,11 @@
-import { Component, AfterViewInit, OnInit, Input } from '@angular/core';
+import { Component, AfterViewInit, OnInit, Input, Injector } from '@angular/core';
 import { IAddressInformations, IGeographicCoordinates } from 'src/app/interfaces/IMap';
-
 import * as Leaflet from 'leaflet';
 import { MapResourceService } from 'src/app/services/resource/map-resource.service';
 import { forkJoin } from 'rxjs';
 import { IWeather } from 'src/app/interfaces/IMeteoInfo';
+import { createCustomElement, NgElement, WithProperties } from '@angular/elements';
+import { ReunionMapLeafletPopupComponent } from './components/reunion-map-leaflet-popup/reunion-map-leaflet-popup.component';
 
 @Component({
   selector: 'reunion-map-leaflet',
@@ -15,16 +16,26 @@ export class ReunionMapLeafletComponent implements OnInit, AfterViewInit {
   @Input()
   public weathers: IWeather[] = [];
 
+  public citysGeographicCoordinates: IGeographicCoordinates[] = [];
   public reunionIsland: IGeographicCoordinates = {
     lat: -21.115141,
     lng: 55.536384,
   };
 
   public map;
-  public citysGeographicCoordinates: IGeographicCoordinates[] = [];
+  public markerIcon = new Leaflet.Icon({
+    iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-icon.png',
+    iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-icon-2x.png',
+    iconSize:    [25, 41],
+    iconAnchor:  [12, 41],
+    popupAnchor: [1, -34],
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    shadowSize:  [41, 41],
+  });
 
   constructor(
     private readonly mapResourceService: MapResourceService,
+    private readonly injector: Injector,
   ) { }
 
   ngOnInit(): void {
@@ -77,7 +88,22 @@ export class ReunionMapLeafletComponent implements OnInit, AfterViewInit {
   }
 
   addMapMarkers(): void {
-    // TODO à partir de citysGeographicCoordinates créer les markers de la map
+    this.citysGeographicCoordinates.forEach((cityGeographicCoordinates: IGeographicCoordinates, index: number) => {
+      const marker = Leaflet.marker(
+        [cityGeographicCoordinates.lat, cityGeographicCoordinates.lng],
+        { icon: this.markerIcon }
+      );
+
+      const popupName: string = `popup-element-${this.weathers[index].id.toLowerCase().replace(/ /g, '-')}`;
+
+      const PopupElement = createCustomElement(ReunionMapLeafletPopupComponent, { injector: this.injector });
+      customElements.define(popupName, PopupElement);
+
+      const popupComponent: NgElement & WithProperties<ReunionMapLeafletPopupComponent> = document.createElement(popupName) as any;
+      popupComponent.weather = this.weathers[index];
+
+      marker.addTo(this.map).bindPopup(popupComponent);
+    });
   }
 
 }
